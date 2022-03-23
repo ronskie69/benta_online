@@ -1,0 +1,124 @@
+<style>
+    .fas {
+        cursor: pointer;
+    }
+</style>
+
+
+<div class="container-fluid">
+    <div class="row forms">
+        <div class="col-12">
+            <h4 class="text-center">Sell Online</h4>
+            <div class="form-holder mt-4">
+                <form id="submitter" class ="p-4" enctype="multipart/form-data">
+                    <%-include('../components/form-input')%>
+                    <div class="d-flex justify-content-between">
+                        <button 
+                            type="reset" 
+                            class="btn btn-danger float-end mt-4">
+                            Clear All Values
+                        </button>
+                        <button 
+                            type="submit" 
+                            class="btn btn-success float-end mt-4">
+                            Add Product
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+$(document).ready(function(){
+    let tagsList = []
+    let itemTag = ""
+
+    $('.fas').each(function(){
+        $(this).click(function(){
+            let tag = $(this).attr('data-tag');
+
+            if($(this).hasClass('fa-plus')){
+
+                if(tagsList.length == 2) {
+                    return alert("Only two tags allowed.")
+                }
+
+                $(this).removeClass('fa-plus').addClass('fa-minus')
+
+                if(tagsList.includes(tag)) return;
+
+                tagsList.push(tag)
+
+            } else {
+
+                $(this).removeClass('fa-minus').addClass('fa-plus')
+                tagsList.splice(tagsList.indexOf(tag), 1)
+
+            }
+
+            updateUI()
+        })
+    })
+
+    function hasDuplicate (newTag){
+        if(tagsList.length > 1){
+            if(tagsList.includes(newTag)){
+                console.log("duplicate!")
+                return true
+            } 
+        }
+        return false
+    }
+
+    function updateUI(){
+        let item_tag = document.getElementById('item_tag')
+
+        tagsList = [...new Set(tagsList)]
+
+        itemTag = ""
+
+        for(let i = 0; i < tagsList.length; i++) {
+            itemTag += tagsList[i].toLowerCase() +", "
+        }
+        
+        document.getElementById("tag_values").value = itemTag
+    }
+    $('#submitter').on('submit',function(e){
+
+        e.preventDefault()
+
+        if(!($('#price').val()) 
+        || ($('#price').val() < 100)
+        || ($('#price').val())){
+            alert("Items with atleast 100 pesos price are only allowed!");
+            return;
+        }
+
+        if($('#tag_values').val() === ""){
+            alert("Please select a tag!");
+            return;
+        }
+
+        const formData = new FormData(this)
+
+        $.ajax({
+            url: 'http://localhost:3000/api/upload',
+            data: formData,
+            method: 'POST',
+            processData: false,
+            contentType: false,
+            cache: false,
+            async: true,
+            success: (data) => {
+                console.log(data)
+                window.location.reload()
+            },
+            error: (err) => {
+                console.log(err)
+            }
+        })
+    });
+})
+</script>
+</html>

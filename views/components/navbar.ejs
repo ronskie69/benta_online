@@ -1,0 +1,68 @@
+<style>
+    .navbar {
+        z-index: 10000;
+        display: flex !important;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #fff;
+    }
+    .navbar .logo {
+        height: 60px;
+        width: 60px;
+    }
+    .nav-item a {
+        transition: ease-in-out .4s;
+    }
+    .nav-item:hover a {
+        transform: scale(1.1);
+        filter: none;
+        transform-origin: left;
+    }
+    .applyShadow {
+        box-shadow: 0px 4px 8px #ccc;
+    }
+</style>
+
+<nav id="navbar" class="navbar navbar-expand-md w-100 fixed-top navbar-light">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="/images/logo.png" class="logo"/>
+        </a>
+        <button
+            class="navbar-toggler"
+            role="button"
+            style="border: none; outline: none;"
+            data-bs-target="#collapse_content"
+            data-bs-toggle="collapse">
+            <i class="fas fa-bars" id="bar"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="collapse_content">
+            <ul class="navbar-nav ms-auto">
+                <% nav.map(route => { %>
+                    <li class="nav-item" data-route="<%=route.routeName%>">
+                        <a href="<%=route.route%>" class="nav-link" data-id="<%=route.id%>">
+                            <%=route.routeName%>
+                        </a>
+                    </li>
+                <% }) %>
+            </ul>
+        </div>
+    </div>
+</nav>
+<script>
+    $('.navbar-toggler').click(function(){
+        if($('#bar').hasClass('fa-bars')){
+            $('#bar').removeClass('fa-bars').addClass('fa-times');
+        } else {
+            $('#bar').removeClass('fa-times').addClass('fa-bars');
+        }
+    });
+    $(document).on('scroll', function(){
+        if(window.scrollY >= 40){
+            $('.navbar').addClass('applyShadow')
+        }
+        if(window.scrollY < 10){
+            $('.navbar').removeClass('applyShadow')
+        }
+    })
+</script>

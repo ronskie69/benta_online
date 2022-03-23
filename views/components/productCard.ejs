@@ -1,0 +1,59 @@
+<style>
+    .card {
+        margin-bottom: 20px;
+        min-width: 200px;
+    }
+    .card-header{
+        height: 200px;
+        position: relative;
+    }
+    .card-header img {
+        position: absolute;
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+        transition: ease-in-out .4s;
+    }
+</style>
+
+<% products.map(product => { %>
+    <div class="col-6 col-lg-3">
+        <div class="card">
+            <div class="card-header">
+                <img 
+                    src="data:image/<%=product.image.contentType%>;base64,
+                    <%=product.image.data.toString('base64')%>"
+                    class="img-fluid img-top img-responsive"/>
+            </div>
+            <div class="card-body">
+                <h4 class="text-center"><%=product.title%></h4>
+                <p>Price: <span class="text-success">Php <%=product.price.toLocaleString()%></span></p>
+                <p>
+                    <small>
+                        Seller: <span><%=product.seller%></span>
+                    </small>
+                </p>
+                <p>
+                    <small>
+                        Location: <span><%=product.location%></span>
+                    </small>
+                </p>
+                <p>
+                    <small>
+                        Contact No: <span><%=product.contact%></span>
+                    </small>
+                </p>
+                <a href="tel:+<%=product.contact%>">
+                    <button class="btn btn-sm btn-primary">
+                        <i class="fas fa-phone mr-2"></i>
+                        Contact Seller
+                    </button>
+                </a>
+            </div>
+        </div>
+    </div>
+<% }) %>

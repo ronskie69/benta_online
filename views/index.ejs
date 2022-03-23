@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<%-include('./components/header')%>
+<style>
+    .landing {
+        margin-top: 100px;
+        height: 500px;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: url('/images/rizal_monument.jpeg'), #3399ff7c;
+        background-size: cover;
+        background-blend-mode: multiply;
+        box-shadow: 0px 5px 5px 0 rgba(20, 20, 20, 0.6);
+    }
+    .content p {
+        color: #fff;
+    }
+    .input_group {
+        border-radius: 20px;
+        width: 100%;
+        height: 40px;
+        text-align: center;
+        box-shadow: 0px 3px 10px 0 rgba(20, 20, 20, 0.6);
+        display: flex;
+        align-items: center;
+        padding: 15px;
+        background: #fff;
+    }
+    .input_group input {
+        width: 100%;
+        border: none;
+        outline: none;
+        margin-left: 5px;
+    }
+    .payments_img {
+        margin: 30px 0;
+        border-radius: 10px;
+        height: 95px;
+        min-width: 150px;
+    }
+    .submit {
+        border: none;
+        background: none;
+    }
+</style>
+<body>
+    <%-include('./components/navbar')%>
+    <div class="container-fluid">
+        <div class="landing w-100">
+            <div class="content">
+                <h2 class="text-light">Welcome to Bentahan Online!</h2>
+                <p>Vehicles are also available now!</p>
+                <form id="search" action="/products">
+                    <div class="input_group">
+                        <button class="submit" type="submit">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        <input placeholder="Search item here..." class="searchbar"/>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <%-include('./components/carousel') %>
+    </div>
+    <div class="container mt-4">
+        <h4 class="text-center">Products On Sale</h4>
+        <a href="/products" class="float-end text-dark">
+            View All
+        </a>
+        <div class="clearfix"></div>
+        <div class="row mt-4">
+            <% if(products.length > 0){ %>
+                <%-include('./components/productCard')%>
+            <%} %>
+        </div>
+    </div>
+    <div class="bg-info mt-4 mb-4 p-4 text-light text-center">
+        <h5>Sell Your Items Online</h5>
+        <p>Sell your items now! Minimum of 100 pesos item prices are required.</p>
+        <button class="btn btn-outline-light">Sell Now</button>
+    </div>
+    <div class="container-fluid mt-4">
+        <div class="card p-4">
+            <h4 class="text-center">About Bentahan Online.PH</h4>
+            <div class="card-body mt-4">
+                <p>
+                    It is designed for people who want to sell their equipment online with their contact number provided and 
+                    buyers will receive the item via cash on delivery.
+                </p>
+                <p>
+                    For now, it is only available in some parts of Calamba City, Laguna and we hope that it will expand in the future!
+                </p>
+            </div>
+        </div>
+        <hr style="background-color: #ccc;"/>
+    </div>
+    <%-include('./components/footer') %>
+</body>
+</html>

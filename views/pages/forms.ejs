@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<%-include('../components/header')%>
+<link rel="stylesheet" href ="/css/forms.css">
+<body>
+    <%-include('../components/navbar')%>
+    <div class="container-fluid">
+        <div class="row rowx">
+            <div class="form-hold">
+                <div class="image">
+                    <img src="/images/brand.png" class="img-fluid img-responsive"/>
+                </div>
+                <div class="form-inner">
+                    <h3 class="text-center mt-4"><%=type%></h3>
+                    <form class="form" id="form" data-type="<%=type%>">
+                        <%-include('../components/inputs', {type: type}) %>
+                        <input type="submit"
+                                class="btn btn-success mt-2 btn-submit form-control"
+                                value="<%=type%>"/>
+                        <p class="text-center">
+                            <% if(type === "Login") { %>
+                                <small>
+                                    No account? <a href="/register">Register</a> here.
+                                </small>
+                            <% } else { %>
+                                <small>
+                                    Have account? <a href="/login">Login</a> here.
+                                </small>
+                            <% } %>
+
+                        </p>
+                    </form>
+                    <hr/>
+                    <p class="text-center"><b>Or Continue with</b></p>
+                    <div class="social-icons">
+                        <i class="fab fa-facebook"></i>
+                        <i class="fab fa-google"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+</body>
+<script>
+    $(document).ready(function(){
+        $('#form').submit(function(e){
+            e.preventDefault()
+            let formType = $(this).attr('data-type').toLocaleLowerCase()
+
+            console.log(formType)
+
+            if(formType === "register" && $('#username').val().length < 6){
+                alert("Username too short! Minimum of 6 characters!")
+                return
+            }
+            
+            if(formType === "register" && $('#password').val().length < 6){
+                alert("Password too short! Minimum of 6 characters!")
+                return
+            }
+
+            if(formType === "register" && $('#username').val().length > 14){
+                alert("Password too long! Max of 14 characters!")
+                return
+            }
+
+            if(formType === "register" && $('#password').val().length > 14){
+                alert("Password too long! Max of 14 characters!")
+                return
+            }
+    
+            const account = {
+                username: $('#username').val().toLocaleLowerCase(),
+                password: $('#password').val().toLocaleLowerCase()
+            }
+            $.ajax({
+                method: 'POST',
+                url: `http://localhost:3000/auth/${formType}`,
+                data: JSON.stringify(account),
+                headers: { 'Content-type': 'application/json'},
+                beforeSend: () => {
+                    $('.btn-submit').attr('disabled', true)                },
+                success: (data) => {
+                    alert(data)
+                    if(formType==="login"){
+                      return window.location.href = "/benta/dashboard"
+                    } 
+                    window.location.href = "/login"
+                },
+                error: (err) => {
+                    alert(err.responseText)
+                    $('.btn-submit').removeAttr('disabled')
+                    $('#password').val("")
+                }
+            })
+        })
+    })
+</script>
+</html>

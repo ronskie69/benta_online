@@ -1,0 +1,109 @@
+<style>
+    .avatar {
+        height: 50px;
+        width: 50px;
+    }
+</style>
+
+<% if(products.length > 0) { %>
+    <% products.map(product => { %>
+        <tr>
+            <td><%=product.id%></td>
+            <td>
+                <img 
+                    src="data:image/<%=product.image.contentType%>;base64,
+                    <%=product.image.data.toString('base64')%>"
+                    class="img-fluid avatar img-responsive"/>
+            </td>
+            <td><%=product.title%></td>
+            <td><%=product.contact%></td>
+            <td><%=product.price.toLocaleString()%></td>
+            <td colspan="3">
+                <button data-bs-toggle="modal" data-bs-target="#product-<%=product.id%>" class="btn btn-sm btn-primary">
+                    <i class="fas fa-edit"></i>
+                    Edit
+                </button>
+                &nbsp;
+                <button 
+                    data-sellerID ="<%=product.sellerID%>" 
+                    data-id="<%=product.id%>"
+                    data-title="<%=product.title%>" 
+                    class="btn btn-sm btn-danger removeItem">
+                    <i class="fas fa-trash"></i>
+                    Remove
+                </button>
+                &nbsp;
+                <button 
+                    data-sellerID ="<%=product.sellerID%>"
+                    data-id="<%=product.id%>"
+                    data-title="<%=product.title%>"  
+                    class="btn btn-sm btn-success soldItem">
+                    <i class="fas fa-check"></i>
+                    Sold
+                </button>
+            </td>
+        </tr>
+        <%-include('./modal', {
+            title: product.title,
+            id: product.id,
+            sellerID: product.sellerID,
+            price: product.price,
+            contact: product.contact,
+            seller: product.seller,
+        })%>
+    <% }) %>
+<% }  else { %>
+    <tr>
+        <td class="text-center" colspan="6">
+            You have no products on sale yet.
+        </td>
+    </tr>
+<% }%>
+
+<script>
+
+    function sendToApi(url, data){
+        $.ajax({
+            method: 'POST',
+            url: url,
+            data: data,
+            async: true,
+            headers: { 'Content-type': 'application/json'},
+            success: (msg) => {
+                alert(msg)
+                window.location.reload()
+            }, 
+            error:(err) => {
+                console.log(err.responseText);
+            }
+        })
+    }
+
+    $('.removeItem').click(function(e){
+        let itemTitle = $(this).attr('data-title');
+
+        let data = {
+            product_id: $(this).attr('data-id'),
+            seller_id: $(this).attr('data-sellerID')
+        }
+
+        if(!window.confirm(`Are you sure to delete ${itemTitle}?`)) return;
+
+        sendToApi('http://localhost:3000/api/remove-product',
+         JSON.stringify(data));
+    });
+
+    $('.soldItem').click(function(e){
+        let itemTitle = $(this).attr('data-title');
+
+        let data = {
+            product_id: $(this).attr('data-id'),
+            seller_id: $(this).attr('data-sellerID')
+        }
+
+        if(!window.confirm(`Are you sure to set ${itemTitle} to sold?`)) return;
+
+        sendToApi('http://localhost:3000/api/sold-product',
+         JSON.stringify(data));
+    })
+</script>

@@ -1,0 +1,15 @@
+/node_modules
+/public/bootstrap
+/public/fontawesome
+/public/fonts
+/public/uploads
+/public/images
+/public/css/aos.css
+/public/css/owl.carousel.min.css
+/public/css/owl.theme.default.min.css
+/public/css/owl.theme.default.css
+/public/js/aos.js
+/public/js/jquery.min.js
+/public/js/owl.carousel.min.js
+.env
+

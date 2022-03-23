@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<%-include('../components/header')%>
+<style>
+    #products {
+        margin-top: 85px !important;
+    }
+    .navs {
+        overflow: hidden;
+        overflow-x: auto;
+        width: 100%;
+        padding: 10px;
+    }
+    .nav_item {
+        border-radius: 30px;
+        padding: 10px;
+        border: solid 1px #ccc;
+        margin-right: 10px;
+        color: #000;
+        cursor: pointer;
+        text-decoration: none;
+    }
+    #no_items {
+        position: absolute !important;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+</style>
+<body>
+    <%-include('../components/navbar')%>
+    <div class="container mt-4" id="products">
+        <h4 class="text-center">Products On Sale</h4>
+        <div class="navs d-flex mt-4">
+            <a href="/products" class="nav_item">All</a>
+            <a href="/products?tag=animals" class="nav_item">Animals</a>
+            <a href="/products?tag=electronics" class="nav_item">Electronics</a>
+            <a href="/products?tag=furnitures" class="nav_item">Furnitures</a>
+            <a href="/products?tag=cosmetics" class="nav_item">Cosmetics</a>
+            <a href="/products?tag=fashion" class="nav_item">Fashion</a>
+            <a href="/products?tag=vehicles" class="nav_item">Vehicles</a>
+            <a href="/products?tag=houses" class="nav_item">Houses</a>
+            <a href="/products?tag=people" class="nav_item">People</a>
+            <a href="/products?tag=resorts" class="nav_item">Resorts</a>
+        </div>
+        <div class="row mt-4">
+            <% if(products.length > 0){ %>
+                <%-include('../components/productCard')%>
+            <%} else { %>
+                <div class="col-12">
+                    <p id="no_items" class="text-danger">No products on sale yet.   :(</p>
+                </div>
+            <% } %>
+        </div>
+    </div>
+</body>
+</html>

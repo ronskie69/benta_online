@@ -1,0 +1,77 @@
+body {
+    background: url('/images/brand.png');
+    backdrop-filter: blur(5px);
+    background-size: cover;
+    background-attachment: fixed;
+}
+.rowx {
+    height: 100vh;
+    width: fit-content;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.form-hold {
+    position: relative;
+    box-sizing: border-box;
+    height: fit-content;
+    width: fit-content;
+    background-color: #fff;
+    border: solid 1px #ccc;
+    margin-top: 80px;
+    display: flex;
+    box-shadow: 0 4px 10px 0 rgba(0,0,0,0.4);
+}
+.form-hold
+.image {
+    height: 100%;
+}
+.form-hold
+.image img {
+    object-fit: cover;
+}
+.form-hold
+.form-inner {
+    background-color: #fff;
+    width: 350px;
+    padding: 15px;
+    border-left: solid 1px #ccc;
+}
+.btn-submit {
+    transition: .4s;
+}
+.btn-submit:hover {
+    color: #fff;
+    filter: brightness(80%);
+}
+.social-icons {
+    margin-top: 10px;
+    text-align: center;
+}
+.fab {
+    cursor: pointer;
+    color: #d4ae6d;
+    font-size: 20px;
+}
+@media screen and (max-width: 920px) {
+    .rowx {
+        height: 100%;
+    }
+    .navbar {
+        position: sticky !important;
+        top: 0;
+    }
+    .form-hold {
+        flex-direction: column-reverse;
+        margin-bottom: 30px;
+    }
+    .image img {
+        height: 250px;
+        width: 100%;
+    }
+    .form-hold
+    .form-inner {
+        border-bottom: solid 1px #ccc;
+    }
+}

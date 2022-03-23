@@ -1,0 +1,111 @@
+<div class="form-group mt-2">
+    <input 
+        type="hidden"
+        placeholder="sellerID"
+        class="form-control mt-2" 
+        id ="sellerID" 
+        name ="sellerID"
+        value="<%=sellerID%>"
+        required />
+</div>
+<div class="form-group mt-2">
+    <label for="tags">Product Image</label>
+    <input 
+        type="file"
+        placeholder="image"
+        class="form-control mt-2" 
+        id ="image" 
+        name ="image" 
+        required />
+</div>
+<div class="form-group mt-2">
+    <label for="tags">Product Title</label>
+    <input 
+        type="text" 
+        placeholder="Enter title of your product here..." 
+        class="form-control mt-2" 
+        id ="title" 
+        name ="title" 
+        required />
+</div>
+<div class="form-group mt-2">
+    <label for="tags">Contact Number</label>
+    <input 
+        type="text"
+        placeholder="Enter your contact number here..." 
+        class="form-control mt-2" 
+        id ="contact_number" 
+        name ="contact_number" 
+        required />
+</div>
+<div class="form-group mt-2">
+    <label for="tags">Seller</label>
+    <input 
+        type="text"
+        readonly
+        placeholder="seller" 
+        class="form-control mt-2" 
+        id ="seller" 
+        name ="seller"
+        value="<%=username%>"
+        required />
+</div>
+<div class="form-group mt-2">
+    <label for="tags">Product's  Price</label>
+    <input 
+        type="number" 
+        placeholder="Enter the price of your product here..." 
+        class="form-control mt-2" 
+        id ="price" 
+        name ="price" 
+        required />
+</div>
+<div class="form-group mt-2">
+    <label for="location">Location</label>
+    <select name="location" id="location" class="form-control mt-2">
+        <option value="Banadero">Banadero</option>
+        <option value="Banlic">Banlic</option>
+        <option value="Barangay 1-7">Barangay 1-7</option>
+        <option value="Barandal" selected>Barandal</option>
+        <option value="Batino">Batino</option>
+        <option value="Bubuyan">Bubuyan</option>
+        <option value="Burol">Burol</option>
+        <option value="Halang">Halang</option>
+        <option value="Kay-Anlog">Kay-Anlog</option>
+        <option value="Lawa">Lawa</option>
+        <option value="Makiling">Makiling</option>
+        <option value="Mayapa">Mayapa</option>
+        <option value="Parian">Parian</option>
+        <option value="Pansol">Pansol</option>
+        <option value="Prinza">Prinza</option>
+        <option value="Punta">Punta</option>
+        <option value="Real">Real</option>
+        <option value="Turbina">Turbina</option>
+    </select>
+</div>
+<div class="form-group mt-2">
+    <label for="tags">Selected Tags</label>
+    <input 
+        readonly 
+        placeholder="Selected tags will appear here..." 
+        class="form-control mt-2" 
+        id ="tag_values" 
+        name ="tags" 
+        required />
+</div>
+<div class="form-group">
+    <label class="text-start">Tags</label>
+    <p class="text-danger">
+        <small>Note: Please select on '+' icon to select a tag. 
+            Only two tags are allowed for each product.
+        </small>
+    </p>
+    <div class="d-inline-block">
+        <% tags.forEach(tag => { %>
+            <div class="badge bg-primary mr-2">
+                <i class="fas fa-plus" data-tag="<%=tag %>"></i>
+                <%=tag%>
+            </div>
+        <% }) %>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+<div class="form-group">
+    <label for="username">Username</label>
+    <input
+        placeholder="Enter username..."
+        name="username"
+        class="form-control"
+        required
+        id="username"/>
+    <% if (type==="Register") { %>
+        <p class="text-danger">
+            <small>Note: Please beware of your input. Usernames are permanent.</small>
+        </p>
+    <% } %>
+</div>
+<div class="form-group mt-2">
+    <label for="password">Password</label>
+    <input
+        type="password"
+        placeholder="Enter password..."
+        name="password"
+        required
+        class="form-control"
+        id="password"/>
+</div>

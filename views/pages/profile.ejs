@@ -1,0 +1,103 @@
+<div class="container-fluid">
+    <h4 class="text-center">Profile</h4>
+    <div class="row">
+        <div class="col-12">
+            <form id="profile_form">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input
+                        placeholder="Enter username..."
+                        name="username"
+                        class="form-control"
+                        required
+                        readonly
+                        value="<%=username%>"
+                        id="username"/>
+                    <p class="text-danger"><small>Note: You will never change your username again.</small></p>
+                </div>
+                <div class="form-group mt-2">
+                    <label for="password">Password</label>
+                    <input
+                        type="password"
+                        placeholder="Enter password..."
+                        name="old_password"
+                        id="old_password"
+                        required
+                        class="form-control"
+                        id="password"/>
+                </div>
+                <div class="form-group mt-2">
+                    <label for="password">New Password</label>
+                    <input
+                        placeholder="Enter password..."
+                        name="new_password"
+                        type="password"
+                        id="new_password"
+                        required
+                        class="form-control"
+                        id="password"/>
+                </div>
+                <div class="form-group mt-2">
+                    <label for="password">Retype Password</label>
+                    <input
+                        placeholder="Enter password..."
+                        name="retype_password"
+                        id="retype_password"
+                        type="password"
+                        required
+                        class="form-control"
+                        id="password"/>
+                </div>
+                <div class="d-flex justify-content-between mt-2">
+                    <button type="reset" id="reset" class="btn btn-danger">Clear Values</button>
+                    <button type="submit" class="btn btn-success">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function(){
+        $('#reset').click(function(e){
+            $('#new_password').val("")
+            $('#old_password').val("")
+            $('#retype_password').val("")
+        })
+    })
+
+    $('#profile_form').submit(function(e){
+
+        e.preventDefault()
+        let newPass = $('#new_password').val()
+        let username = $('#username').val()
+        let oldPass = $('#old_password').val()
+        let rePass = $('#retype_password').val()
+
+        if(newPass !== rePass){
+            alert("New passwords not matched!");
+            $('#retype_password').val("")
+            return;
+        }
+
+        const userData = {
+            username: $('#username').val(),
+            new_password: newPass,
+            old_password: oldPass
+        }
+
+        $.ajax({
+            method: 'POST',
+            url: 'http://localhost:3000/auth/change-password',
+            data: JSON.stringify(userData),
+            headers: { 'Content-type': 'application/json'},
+            async: true,
+            success: (msg) => {
+                alert(msg)
+                window.location.reload()
+            },
+            error: (err) => {
+                alert(err.responseText)
+            }
+        })
+    })
+</script>

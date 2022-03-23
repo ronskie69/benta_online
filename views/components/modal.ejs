@@ -1,0 +1,143 @@
+<div class="modal fade" id="product-<%=id%>" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Update <%=title%></h5>
+            </div>
+            <div class="modal-body">
+                <form id="product-<%=id%>" class="form">
+                    <div class="form-group">
+                        <label for="title">Product Title</label>
+                        <input
+                            placeholder="Enter product title..."
+                            name="title"
+                            class="form-control"
+                            required
+                            value="<%=title%>"
+                            id="title"/>
+                    </div>
+                    <div class="form-group mt-2">
+                        <input 
+                            type="hidden"
+                            placeholder="id"
+                            class="form-control mt-2" 
+                            id ="id" 
+                            name ="id"
+                            value="<%=id%>"
+                            required />
+                    </div>
+                    <div class="form-group mt-2">
+                        <input 
+                            type="hidden"
+                            placeholder="sellerID"
+                            class="form-control mt-2" 
+                            id ="sellerID" 
+                            name ="sellerID"
+                            value="<%=sellerID%>"
+                            required />
+                    </div>
+                    <div class="form-group">
+                        <label for="seller">Seller Name</label>
+                        <input
+                            placeholder="Enter seller name/username..."
+                            name="seller"
+                            class="form-control"
+                            value="<%=seller%>"
+                            required
+                            id="seller"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="contact">Seller Contact No.</label>
+                        <input
+                            placeholder="Enter seller's contact number..."
+                            name="contact"
+                            value="<%=contact%>"
+                            class="form-control"
+                            required
+                            id="contact"/>
+                    </div>
+                    <div class="form-group mt-2">
+                        <label for="price">Product Price</label>
+                        <input
+                            placeholder="Enter product price..."
+                            name="price"
+                            required
+                            value="<%=price%>"
+                            class="form-control"
+                            id="price"/>
+                    </div>
+                    <div class="form-group mt-2">
+                        <label for="location">Product Pickup Location</label>
+                        <select name="location" id="location" class="form-control mt-2">
+                            <option value="Banadero">Banadero</option>
+                            <option value="Banlic">Banlic</option>
+                            <option value="Barangay 1-7">Barangay 1-7</option>
+                            <option value="Barandal" selected>Barandal</option>
+                            <option value="Batino">Batino</option>
+                            <option value="Bubuyan">Bubuyan</option>
+                            <option value="Burol">Burol</option>
+                            <option value="Halang">Halang</option>
+                            <option value="Kay-Anlog">Kay-Anlog</option>
+                            <option value="Lawa">Lawa</option>
+                            <option value="Makiling">Makiling</option>
+                            <option value="Mayapa">Mayapa</option>
+                            <option value="Parian">Parian</option>
+                            <option value="Pansol">Pansol</option>
+                            <option value="Prinza">Prinza</option>
+                            <option value="Punta">Punta</option>
+                            <option value="Real">Real</option>
+                            <option value="Turbina">Turbina</option>
+                        </select>
+                    </div>
+                    <div class="d-flex justify-content-between mt-2">
+                        <button type="button" data-bs-dismiss="modal"  class="btn btn-sm btn-danger">Cancel</button>
+                        <button type="submit" id="<%=id%>" class="btn btn-sm btn-success">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $.fn.serializeObject = function() {
+        var o = {};
+        var a = this.serializeArray();
+        $.each(a, function() {
+            if (o[this.name]) {
+                if (!o[this.name].push) {
+                    o[this.name] = [o[this.name]];
+                }
+                o[this.name].push(this.value || '');
+            } else {
+                o[this.name] = this.value || '';
+            }
+        });
+        return o;
+    };
+
+    $('.form').submit(function(e){
+
+
+        e.preventDefault()
+        // const data = JSON.stringify($(this).serializeArray())
+
+        $.ajax({
+            method: 'POST',
+            url: 'http://localhost:3000/api/update-product',
+            data: JSON.stringify($(this).serializeObject()),
+            async: true,
+            headers: { 'Content-type': 'application/json'},
+            beforeSend: () => {
+                $(this).find('.btn-success').attr('disabled', true)
+            },
+            success: (data) => {
+                window.location.reload()
+            },
+            error: (err) => {
+                console.log(err)
+            }
+        })
+    });
+</script>

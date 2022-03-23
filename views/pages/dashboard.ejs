@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<%-include('../components/header')%>
+<style>
+    body {
+        overflow: auto;
+        overflow-y: auto;
+    }
+    .navbar {
+        border-bottom: solid 1px #ccc;
+        background-color: #fff !important;
+    }
+    .navbar .img {
+        height: 60px;
+        width: 60px;
+    }
+    .nav-item { 
+        padding: 2px;
+        transition: ease-in-out .4s;
+    }
+    .activate {
+        border-radius: 20px;
+        color: #f4f5f6 !important;
+        background-color: #0dcaf0;
+    }
+    .nav-item:hover {
+        border-radius: 20px;
+        background-color: #ccc;
+    }
+    .main_content {
+        padding: 20px;
+        margin: 80px 0 20px 0;
+        height: fit-content;
+    }
+    .sidebar-nav {
+        border-left: solid 1px #ccc;
+    }
+    @media only screen and (min-width: 768px) {
+        .sidebar-nav {
+            width: 200px;
+            height: calc(100% - 75px);
+            top: 75px;
+            visibility: visible !important;
+            transform: none;
+        }
+        .offcanvas-backdrop::before{
+            display: none;
+        }
+        .btn-close {
+            display: none;
+        }
+        .main_content {
+            margin-left: 200px;
+            padding: 20px;
+        }
+    }
+</style>
+<body>
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top">
+        <div class="container-fluid">
+            <button 
+                role="button"
+                data-bs-toggle="offcanvas"
+                data-bs-target="#sidebar"
+                class="navbar-toggler">
+                <!-- <i class="fas fa-bars"></i> -->
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <a href="#">
+                <img src="/images/logo.png" class="img" />
+            </a>
+            <button 
+                role="button"
+                data-bs-target="#main_nav"
+                data-bs-toggle="collapse"
+                aria-expanded="false"
+                class="navbar-toggler">
+                <!-- <i class="fas fa-bars"></i> -->
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="main_nav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a href="/products" class="nav-link">Products</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/benta/dashboard" id="logout" class="nav-link">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="offcanvas offcanvas-start p-2 sidebar-nav" tabindex="-1" id="sidebar" >
+            <div class="oncanvas-header">
+                <button 
+                    class="btn-close text-reset float-end"
+                    data-bs-dismiss="offcanvas">
+                </button>
+                <div class="clearfix"></div>
+                <h4 class="offcanvas-title mt-4 text-center">
+                    Dashboard
+                </h4>
+            </div>
+            <div class="oncanvas-body mt-4 p-2">
+                <ul class="navbar-nav w-100 d-inline-block" id="sidenav" data-active="<%=active%>">
+                    <li class="nav-item">
+                        <a href="/benta/dashboard?type=profile" id="profile" class="nav-link">
+                            <i class="fas fa-user me-3"></i>
+                            Profile
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/benta/dashboard?type=sell" id="sell" class="nav-link">
+                            <i class="fas fa-cart-plus me-3"></i>
+                            Sell Online
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/benta/dashboard?type=sale" id="sale" class="nav-link">
+                            <i class="fas fa-shopping-cart me-3"></i>
+                            On Sale
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/benta/dashboard?type=sold" id="sold" class="nav-link">
+                            <i class="fas fa-handshake me-3"></i>
+                            Items Sold
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="main_content">
+        <%-include(dashboard, { tags: tags})%>
+    </div>
+</body>
+<script>
+    $(document).ready(function(){
+        let active = $('#sidenav').attr('data-active')
+        console.log(active)
+        $(`#${active}`).toggleClass('activate')
+
+        $('#logout').click(function(e){
+            e.preventDefault()
+            
+            if(!window.confirm("Are you sure to logout?")) return;
+            
+            $.ajax({
+                method: 'GET',
+                url: 'http://localhost:3000/auth/logout',
+                async: true,
+                success: (message) => {
+                    alert(message)
+                    window.location.href = "/login"
+                },
+                error: (err) => {
+                    console.log(err)
+                }
+            })
+        })
+    })
+</script>
+</html>

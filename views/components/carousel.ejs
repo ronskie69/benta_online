@@ -1,0 +1,43 @@
+<style>
+    .item {
+        height: 500px;
+    }
+    .item img {
+        object-fit: fill;
+        height: 100%;
+        width: 100%;
+    }
+    @media screen and (max-width: 600px) {
+        .item {
+            height: 320px;
+        }
+    }
+</style>
+<div class="owl-carousel owl-theme mt-4">
+    <div class="item" id="banner1">
+        <img src="/images/banner1.png" class="img-fluid img-responsive" />
+    </div>
+    <div class="item" id="banner2">
+        <img src="/images/banner3.png" class="img-fluid img-responsive" />
+    </div>
+    <div class="item" id="banner3">
+        <img src="/images/banner4.png" class="img-fluid img-responsive" />
+    </div>
+    <div class="item" id="banner4">
+        <img src="/images/banner2.png" class="img-fluid img-responsive" />
+    </div>
+</div>
+<script>
+    $('.owl-carousel').owlCarousel({
+        loop: true,
+        margin: 10,
+        items: 2,
+        autowidth: true,
+        autoplay: true,
+        responsive: {
+            0: {
+                items: 1
+            }
+        }
+    })
+</script>
